@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+	
+	<select id="checkId" parameterType="string" resultType="_int">
+		select count(user_id) from tbl_user where user_id = #{userId};
+	</select>
+	
+	<select id="login" parameterType="string" resultType="_int">
+		select user_number from tbl_user where user_id = #{user_id} and user_password = #{user_password}
+	</select>
+	
+	<select id="findId" parameterType="string" resultType="string">
+		select user_id from tbl_user where user_phone = #{user_phone}
+	</select>
+	
+	<select id="selectUser" parameterType="_int" resultType="vo.UserVO">
+		select user_number, user_id, user_name, user_password, user_phone, user_nickname, user_email, user_address, user_birth_date, user_gender, user_recommender_id, user_job from tbl_user
+	</select>
+	
+	<select id="getTotalOfRecommender" parameterType="string" resultType="_int">
+		select count(user_recommender_id) from tbl_user where user_recommender_id = #{user_recommender_id}
+	</select>
+	
+	<select id="selectRecommenders" parameterType="string" resultType="vo.UserVO">
+		select user_number, user_id, user_name, user_password, user_phone, user_nickname, user_email, user_address, user_birth_date, user_gender, user_recommender_id, user_job from tbl_user where user_recommender_id = #{user_recommender_id}
+	</select>
+	
+	<select id="getMyRecommender" parameterType="string" resultType="vo.UserVO">
+		select user_number, user_id, user_name, user_password, user_phone, user_nickname, user_email, user_address, user_birth_date, user_gender, user_recommender_id, user_job from tbl_user where user_id = #{user_id}
+	</select>
+	
+	<insert id="insert" parameterType="vo.UserVO">
+		insert into tbl_user (user_id, user_name, user_password, user_phone, user_nickname, user_email, user_address, user_birth_date, user_gender, user_recommender_id, user_job) values(#{user_id}, #{user_name}, #{user_password}, #{user_phone}, #{user_nickname}, #{user_email}, #{user_address}, #{user_birth_date}, #{user_gender}, #{user_recommender}, #{user_job})
+	</insert>
+	
+	<update id="updateUserPassword" parameterType="string">
+		update tbl_user set user_password = #{user_password} where user_id = #{user_id}
+	</update>
+	
+	<update id="update" parameterType="vo.UserVO">
+		update tbl_user set user_name = #{user_name}, user_password = #{user_password}, user_phone = #{user_phone}, user_nickname = #{user_nickname}, user_address = #{user_address}, user_birth_date = #{user_birth_date}, user_gender = #{user_gender}, user_recommender_id = #{user_recommender_id}, user_job = #{user_job};
+	</update>
+	
+	<delete id="delete" parameterType="_int">
+		delete from tbl_user where user_number = #{user_number}
+	</delete>
+	
+</mapper>
